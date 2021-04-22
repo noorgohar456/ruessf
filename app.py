@@ -104,8 +104,7 @@ def home():
 def predict():
     if request.method == 'POST':
         message = request.form['message']
-        data = [message]
-        my_prediction = checking(data)
+        my_prediction = checking(message)
     return render_template('result.html', prediction=my_prediction)
 
 
