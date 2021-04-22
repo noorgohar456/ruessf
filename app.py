@@ -3,6 +3,7 @@ import pickle
 import re
 import os
 import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
 
 file1 = open('lang_vectors.pkl', 'rb')
 eng_v = pickle.load(file1)
