@@ -53,7 +53,7 @@ def calculateProbability(text_message, language_set):
     found = 0
     for i in range(len(splitted_message)):
         if splitted_message[i] in language_set:
-        found += 1
+            found += 1
     probability = float(found) / len(splitted_message)
     print(probability)
     return probability
