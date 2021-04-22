@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-    <link rel="stylesheet" type="text/css"  href="static/styles.css">
+	<title>Home</title>
+	<!-- <link rel="stylesheet" type="text/css" href="../static/css/styles.css"> -->
+	<link rel="stylesheet" type="text/css"  href="static/styles.css">
 </head>
 <body>
 
@@ -13,18 +14,23 @@
 		
 	</div>
 	</header>
-	
-	<div class="results">
 
+	<div class="ml-container">
 
+		<form action="{{ url_for('predict')}}" method="POST">
+		<p>Enter your message here</p>
+		<!-- <input type="text" name="comment"/> -->
+		<textarea name="message" rows="6" cols="50"></textarea>
+		<br/>
+
+		<input type="Submit" class="btn-info" value="Predict">
 		
-	{% if prediction == 1%}
-	<h2 style="color:red;font-size:20;text-align: center;">Spam</h2>
-	{% elif prediction == 0%}
-	<h2 style="color:blue;font-size:20;text-align: center;">Ham</h2>
-	{% endif %}
-
+	</form>
+		
 	</div>
-
 </body>
+	<footer class="footer">
+    <div class="footerContainer">
+        <p class="copyright">Sukkur IBA University</p>
+    </div>
 </html>
