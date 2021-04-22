@@ -31,11 +31,10 @@ roman_urdu_vectorizer = getCountVectorizer(roman_urdu_features)
 
 
 def findClass(text, modelName, vect):
-    lab = ['Ham', 'spam']
     x = vect.transform([text]).toarray()
     p = modelName.predict(x)
     a = int(p[0])
-    return lab[a]
+    return a
 
 
 def preprocess(text):
