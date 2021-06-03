@@ -99,6 +99,14 @@ def home():
     return render_template('home.html')
 
 
+@app.route('/predict2', methods=['POST'])
+def predict():
+    if request.method == 'POST':
+        message = request.form['message']
+        my_prediction = checking(message)
+    return my_prediction
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
