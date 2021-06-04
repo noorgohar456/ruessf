@@ -104,7 +104,7 @@ def tell():
     if request.method == 'POST':
         message = request.form['message']
         my_prediction = checking(message)
-    return my_prediction
+    return str(my_prediction)
 
 
 @app.route('/predict', methods=['POST'])
