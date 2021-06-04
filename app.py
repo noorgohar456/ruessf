@@ -100,7 +100,7 @@ def home():
 
 
 @app.route('/tell', methods=['POST'])
-def predict():
+def tell():
     if request.method == 'POST':
         message = request.form['message']
         my_prediction = checking(message)
