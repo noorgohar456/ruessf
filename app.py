@@ -5,7 +5,7 @@ import os
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 
-file1 = open('lang_vectors.pkl', 'rb')
+file1 = open('lang_vectors_2.pkl', 'rb')
 eng_v = pickle.load(file1)
 rmu_v = pickle.load(file1)
 acu_v = pickle.load(file1)
@@ -48,30 +48,38 @@ def preprocess(text):
     return text
 
 
-def calculateProbability(text_message, language_set):
-    splitted_message = text_message.split()
-    found = 0
-    for i in range(len(splitted_message)):
-        if splitted_message[i] in language_set:
-            found += 1
-    probability = float(found) / len(splitted_message)
-    print(probability)
-    return probability
+def calculateProbability(text_message,english_text,roman_urdu_text,actual_urdu_text):
+  splitted_message = text_message.split()
+  found_eng = found_rur = found_acu = found_oth = 0
+  for i in range(len(splitted_message)):
+    ttext = splitted_message[i]
+    if ttext in english_text:
+      found_eng +=1
+    elif ttext in roman_urdu_text:
+      found_rur +=1
+    elif ttext in actual_urdu_text:
+      found_acu +=1
+    else:
+      found_oth +=1
+  prob_eng = float(found_eng)/ len(splitted_message)
+  prob_rur = float(found_rur)/ len(splitted_message)
+  prob_acu = float(found_acu)/ len(splitted_message)
+  prob_oth = float(found_oth)/ len(splitted_message)
+  return prob_eng, prob_rur, prob_acu, prob_oth
 
 
 def language_detection(text):
-    processed_text = preprocess(text)
-    english_probability = calculateProbability(processed_text, eng_v)
-    roman_urdu_probability = calculateProbability(processed_text, rmu_v)
-    actual_urdu_probability = calculateProbability(processed_text, acu_v)
-    max_prob = max(english_probability, roman_urdu_probability,
-                   actual_urdu_probability)
-    if max_prob == english_probability:
-        return 'Eng'
-    elif max_prob == roman_urdu_probability:
-        return 'RmUr'
-    elif max_prob == actual_urdu_probability:
-        return 'Ur'
+    processed_text =  preprocess(text)
+    ep,rup,aup,olp = calculateProbability(processed_text,eng_v,rmu_v,acu_v)
+    max_prob = max(ep,rup,aup,olp) 
+    if max_prob == ep:
+      return 'Eng'
+    elif max_prob == rup:
+      return 'RmUr'
+    elif max_prob == aup:
+      return 'Ur'
+    elif max_prob == olp:
+      return 'Other'
 
 
 def checking(text):
@@ -88,6 +96,8 @@ def checking(text):
         # use roman urdu model
         pretext = preprocess(text)
         msg_class = findClass(pretext, roman_urdu_model, roman_urdu_vectorizer)
+    elif (language_detected == 'Other'):
+        msg_class = 2
     return msg_class
 
 
